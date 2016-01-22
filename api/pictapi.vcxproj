@@ -39,6 +39,7 @@
     <TargetExt>.lib</TargetExt>
     <IntDir>$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)$(Configuration)\api\</OutDir>
+    <LibraryPath>$(SolutionDir)\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>

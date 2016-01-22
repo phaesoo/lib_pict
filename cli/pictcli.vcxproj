@@ -44,6 +44,10 @@
     <OutDir>$(SolutionDir)$(Configuration)\cli\</OutDir>
     <DropDir>$(SolutionDir)bin\</DropDir>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LibraryPath>$(SolutionDir)\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)\include\TextEncodingDetect;$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>
@@ -56,7 +60,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\$(Configuration)\api</AdditionalLibraryDirectories>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;pict.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;pict.lib;TextEncodingDetect.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>
@@ -88,10 +92,12 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\include\TextEncodingDetect\text_encoding_detect.h" />
     <ClInclude Include="ccommon.h" />
     <ClInclude Include="cmdline.h" />
     <ClInclude Include="common.h" />
     <ClInclude Include="cparser.h" />
+    <ClInclude Include="FileManager.h" />
     <ClInclude Include="gcdexcl.h" />
     <ClInclude Include="ctokenizer.h" />
     <ClInclude Include="gcd.h" />
@@ -99,6 +105,7 @@
     <ClInclude Include="model.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="strings.h" />
+    <ClInclude Include="TextEncodingDetector.h" />
     <ClInclude Include="ver.h" />
   </ItemGroup>
   <ItemGroup>
@@ -106,6 +113,7 @@
     <ClCompile Include="cmdline.cpp" />
     <ClCompile Include="common.cpp" />
     <ClCompile Include="cparser.cpp" />
+    <ClCompile Include="FileManager.cpp" />
     <ClCompile Include="gcdexcl.cpp" />
     <ClCompile Include="ctokenizer.cpp" />
     <ClCompile Include="gcd.cpp" />
@@ -114,6 +122,7 @@
     <ClCompile Include="model.cpp" />
     <ClCompile Include="pict.cpp" />
     <ClCompile Include="strings.cpp" />
+    <ClCompile Include="TextEncodingDetector.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc" />

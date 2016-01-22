@@ -10,6 +10,9 @@ using namespace std;
 #include "gcd.h"
 using namespace pictcli_gcd;
 
+#include "../include/TextEncodingDetect/text_encoding_detect.h"
+
+using namespace AutoIt::Text;
 //
 //
 //
@@ -42,9 +45,61 @@ int __cdecl wmain
     IN wchar_t* args[]
     )
 {
+	/////////////////////////////////////////////
+	if (argc != 2)
+	{
+		wprintf(L"\nUsage: %s filename.", args[0]);
+		return 1;
+	}
+
+	// Open file in binary mode
+	FILE *file = _wfopen(args[1], L"rb");
+
+	if (file == NULL)
+	{
+		wprintf(L"\nCould not open file.\n");
+		return 1;
+	}
+
+
+
+	// Detect the encoding
+	TextEncodingDetect textDetect;
+	TextEncodingDetect::Encoding curEncoding = textDetect.DetectEncoding(buffer, fsize);
+
+	EncodingType encoding;
+	switch (curEncoding)
+	{
+	case TextEncodingDetect::None: 
+		wprintf(L"Binary file does not supported");
+		return (ErrorCode_BadModel);
+	case TextEncodingDetect::ASCII:
+	case TextEncodingDetect::ANSI:
+		encoding = ANSI;
+		break;
+	case TextEncodingDetect::UTF8_BOM:
+	case TextEncodingDetect::UTF8_NOBOM: 
+		encoding = UTF8;
+		break;
+	case TextEncodingDetect::UTF16_LE_BOM:
+	case TextEncodingDetect::UTF16_LE_NOBOM:
+		encoding = UTF16_LittleEndian;
+		break;
+	case TextEncodingDetect::UTF16_BE_BOM:
+	case TextEncodingDetect::UTF16_BE_NOBOM:
+		encoding = UTF16_BigEndian;
+		break;
+	default: 
+		wprintf(L"Unknown file type");
+		return (ErrorCode_BadModel);
+	}
+
+	// Free up
+	delete[] buffer;
+	////////////////////////////////////////////
     time_t start = time( NULL );
 
-    CModelData modelData;
+    CModelData modelData(encoding);
 
     if( !ParseArgs( argc, args, modelData ) )
     {

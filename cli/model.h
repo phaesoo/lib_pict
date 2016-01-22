@@ -111,7 +111,8 @@ public:
     std::set< wchar_t >            ProvidedArguments; // arguments defined by a user   
                                                       // helpful to catch redefinitions
     // ctor
-    CModelData() : Order(2),
+    CModelData(EncodingType encoding) 
+		: Order(2),
         ValuesDelim(L','),
         NamesDelim(L'|'),
         InvalidPrefix(L'~'),
@@ -124,7 +125,7 @@ public:
         MaxApproxTries(1000),
         ConstraintPredicates(L""),
         m_hasNegativeValues(false),
-        m_encoding(ANSI),
+        m_encoding(encoding),
         m_totalCombinations(0),
         m_remainingCombinations(0) {}
 

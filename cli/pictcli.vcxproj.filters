@@ -33,6 +33,12 @@
     <ClCompile Include="gcdmodel.cpp">
       <Filter>Client</Filter>
     </ClCompile>
+    <ClCompile Include="TextEncodingDetector.cpp">
+      <Filter>text_encoding_detect</Filter>
+    </ClCompile>
+    <ClCompile Include="FileManager.cpp">
+      <Filter>text_encoding_detect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
@@ -65,6 +71,15 @@
       <Filter>Client</Filter>
     </ClInclude>
     <ClInclude Include="ver.h" />
+    <ClInclude Include="..\include\TextEncodingDetect\text_encoding_detect.h">
+      <Filter>text_encoding_detect</Filter>
+    </ClInclude>
+    <ClInclude Include="TextEncodingDetector.h">
+      <Filter>text_encoding_detect</Filter>
+    </ClInclude>
+    <ClInclude Include="FileManager.h">
+      <Filter>text_encoding_detect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc" />
@@ -83,6 +98,9 @@
     </Filter>
     <Filter Include="Client">
       <UniqueIdentifier>{44687e14-1291-4c2e-a553-0d97ee66997a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="text_encoding_detect">
+      <UniqueIdentifier>{df348d16-9ccf-4d17-a2a3-a39b56105e9f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
