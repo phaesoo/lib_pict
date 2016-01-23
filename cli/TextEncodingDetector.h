@@ -4,22 +4,14 @@
 
 #include "strings.h"
 
-typedef AutoIt::Text::TextEncodingDetect::Encoding Encoding;
+//typedef AutoIt::Text::TextEncodingDetect::Encoding Encoding;
 
-class CTextEncodingDetector
+class TextEncodingDetector
 {
-public:
-	CTextEncodingDetector() {}
-	~CTextEncodingDetector() {}
 
 public:
-	Encoding DetectTextEncoding(const wchar_t* fileLoc);
+	TextEncodingDetector() {}
+	~TextEncodingDetector() {}
 
-private:
-	bool GetFileBuffer(const wchar_t* fileLoc, unsigned char* buffer);
-
-private:
-
-	std::shared_ptr<unsigned char> buffer_;
+	AutoIt::Text::TextEncodingDetect::Encoding DetectTextEncoding(const wchar_t* fileLoc);
 };
-

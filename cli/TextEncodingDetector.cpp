@@ -1,23 +1,23 @@
 #include <memory>
-#include <assert.h>
+#include <cassert>
 
 #include "text_encoding_detect.h"
 #include "TextEncodingDetector.h"
 
+using namespace AutoIt::Text;
 
-Encoding CTextEncodingDetector::DetectTextEncoding(const wchar_t* fileLoc)
+TextEncodingDetect::Encoding TextEncodingDetector::DetectTextEncoding(const wchar_t* fileLoc)
 {
-	if (GetFileBuffer)
-}
-
-bool CTextEncodingDetector::GetFileBuffer(const wchar_t* fileLoc, unsigned char* buffer)
-{
-	if (buffer != nullptr) { assert(0); return false; }
+	TextEncodingDetect::Encoding encoding = TextEncodingDetect::None;
 
 	// Open file in binary mode
-	FILE* file;
-	file = _wfopen(fileLoc, L"rb");
-	if (file == nullptr) { assert(0);  return false; }
+	FILE *file = nullptr;
+	errno_t err = _wfopen_s(&file, fileLoc, L"rb");
+	if (err != 0)
+	{
+		assert(0);
+		return encoding;
+	}
 
 	// Get file size
 	fseek(file, 0, SEEK_END);
@@ -25,10 +25,13 @@ bool CTextEncodingDetector::GetFileBuffer(const wchar_t* fileLoc, unsigned char*
 	fseek(file, 0, SEEK_SET);
 
 	// Read it all in
-	buffer = new unsigned char[fsize];
+	unsigned char *buffer = new unsigned char[fsize];
 	fread(buffer, fsize, 1, file);
 	fclose(file);
 
-	return true;
+	// Detect the encoding
+	TextEncodingDetect textDetect;
+	return textDetect.DetectEncoding(buffer, fsize);
 }
+
 

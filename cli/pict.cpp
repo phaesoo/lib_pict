@@ -10,7 +10,7 @@ using namespace std;
 #include "gcd.h"
 using namespace pictcli_gcd;
 
-#include "../include/TextEncodingDetect/text_encoding_detect.h"
+#include "TextEncodingDetector.h"
 
 using namespace AutoIt::Text;
 //
@@ -52,26 +52,15 @@ int __cdecl wmain
 		return 1;
 	}
 
-	// Open file in binary mode
-	FILE *file = _wfopen(args[1], L"rb");
-
-	if (file == NULL)
-	{
-		wprintf(L"\nCould not open file.\n");
-		return 1;
-	}
-
-
-
-	// Detect the encoding
-	TextEncodingDetect textDetect;
-	TextEncodingDetect::Encoding curEncoding = textDetect.DetectEncoding(buffer, fsize);
+	TextEncodingDetector detector;
+	TextEncodingDetect::Encoding detectedEncoding = detector.DetectTextEncoding(args[1]);
 
 	EncodingType encoding;
-	switch (curEncoding)
+	switch (detectedEncoding)
 	{
 	case TextEncodingDetect::None: 
-		wprintf(L"Binary file does not supported");
+		wprintf(L"Binary file or unknown type");
+		assert(0);
 		return (ErrorCode_BadModel);
 	case TextEncodingDetect::ASCII:
 	case TextEncodingDetect::ANSI:
@@ -94,8 +83,6 @@ int __cdecl wmain
 		return (ErrorCode_BadModel);
 	}
 
-	// Free up
-	delete[] buffer;
 	////////////////////////////////////////////
     time_t start = time( NULL );
 
